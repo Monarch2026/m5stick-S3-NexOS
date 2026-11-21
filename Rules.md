@@ -10,7 +10,10 @@
 
 ## CHANGES ##
 1. After each change ensure that all .md files are updated.
-2. After each change, validate and test the changes and then give instructions to the user to test and confirm that it works. If it works, git commit and push a new version to GitHub.
+2. Validate the change yourself first (build, host preview, static checks). This is only your side of testing — it does not count as user confirmation.
+3. Then give the user clear instructions to test the change on hardware and confirm it works. Do NOT assume it works just because it builds or a host preview looks right.
+4. Wait for the user's explicit confirmation that it works. Do NOT git commit or push until the user has clearly said it works (or told you to proceed). This applies to every change, including updates to these rule files themselves.
+5. Only after the user confirms, commit and push a new version to GitHub, then tell them what was pushed.
 
 ## PROJECT ##
 1. Always split large files into modular files to ensure an organized project structure and avoid too large files.
