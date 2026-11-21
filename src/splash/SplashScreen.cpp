@@ -24,6 +24,13 @@ constexpr float kBarDuration = 2600.f;
 
 constexpr int kBarHeight = 6;
 
+// Shown once the intro finishes, so it is obvious that a button press goes home.
+constexpr const char* kHintText = "Press any button";
+
+// Wait just past the bar fill, then fade the hint in over half a second.
+constexpr float kHintStart = kBarStart + kBarDuration + 300.f;
+constexpr float kHintDuration = 500.f;
+
 }  // namespace
 
 SplashScreen::~SplashScreen() { delete _canvas; }
@@ -126,6 +133,21 @@ void SplashScreen::render(uint32_t elapsedMs) {
     sheen = fmodf(since / 2400.f, 1.f);
   }
   _bar.draw(_canvas, barX, barY, barW, kBarHeight, bar, sheen);
+
+  // Once the intro finishes, invite interaction: any button except power goes home.
+  float done = Easing::window(elapsed, kHintStart, kHintDuration);
+  if (done > 0.f) {
+    float breathe = 0.5f + 0.5f * sinf(elapsed * 0.003f);  // 0..1
+    float alpha = Easing::clamp01(done * (0.30f + 0.40f * breathe));
+    _canvas->setTextSize(1);
+    _canvas->setFont(&fonts::FreeSansBold9pt7b);
+    _canvas->setTextDatum(textdatum_t::middle_center);
+    Rgb hint = mix(Palette::Black, Palette::CyanBloom, alpha);
+    // Restore the wordmark font so the next frame's wordmark keeps its size.
+    auto savedFont = _canvas->getFont();
+    _canvas->drawString(kHintText, screenW / 2, screenH - 16);
+    _canvas->setFont(savedFont);
+  }
 }
 
 }  // namespace nexos

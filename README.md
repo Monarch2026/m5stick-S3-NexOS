@@ -2,7 +2,7 @@
 
 Boot splash firmware for the M5Stack StickS3. The device shows a black screen, a neon diamond with four spikes, the name NexOS, and a loading bar.
 
-The panel is 135 × 240 in portrait. After the bar fills, the splash stays up and the neon halo keeps breathing. There are no other apps yet.
+The panel is 135 × 240 in portrait. After the bar fills, the splash stays up and the neon halo keeps breathing, with a faint "Press any button" hint. Press any button except power to reach the home screen — an idle page that shows the same mark and name where apps will eventually live.
 
 ## What you need
 
@@ -37,7 +37,7 @@ pio device list
 pio run -e m5stack-sticks3 -t upload --upload-port /dev/cu.usbmodemXXXX
 ```
 
-5. Open the serial log (115200). You should see `NexOS splash 135x240`, then `NexOS splash complete` after about four seconds.
+5. Open the serial log (115200). You should see `NexOS splash 135x240`, then `NexOS splash complete` after about four seconds, and `NexOS: entered home` when you press a button.
 
 ```bash
 pio device monitor -e m5stack-sticks3
@@ -54,6 +54,7 @@ Hold the stick with the USB port down.
 3. **NexOS** appears under the mark.
 4. A rounded bar fills from cyan to magenta.
 5. The bar stays full, a bright streak moves across it, and the halo breathes.
+6. A faint **Press any button** appears below the bar. Press any button except the power button to reach the home screen: the same mark and **NexOS**, no bar, halo still breathing.
 
 If the image is sideways, say so. Rotation is set to `0` in `SplashScreen::begin`.
 
@@ -73,6 +74,7 @@ The PNGs (`splash_700.png`, `splash_2200.png`, `splash_5200.png`, …) show the 
 ```
 include/nexos/     headers
 src/main.cpp       boot
+src/home/          idle home screen reached from the splash
 src/splash/        splash timing and the offscreen frame
 src/ui/            logo, wordmark, loading bar
 platformio.ini     StickS3 target

@@ -2,14 +2,20 @@
 
 ## Current
 
-NexOS boots on an M5Stack StickS3 and shows a single animated splash screen.
+NexOS boots on an M5Stack StickS3 with an animated splash, then offers an empty home screen.
+
+### Splash (boot)
 
 - The screen is black, high contrast, and neon, in the spirit of an Apple boot splash: one centered mark, the product name, and a loading bar.
 - The mark is a diamond with four spikes, one leaving each vertex (up, right, down, and left).
 - The name is **NexOS**.
 - The loading bar fills once, then stays full. A slow highlight keeps moving across it.
-- After the intro, the mark stays on screen and the neon halo breathes. There is no home screen yet.
-- The splash is the whole firmware. Buttons do not navigate anywhere.
+- After the intro, the mark stays on screen, the neon halo breathes, and a faint "Press any button" hint invites interaction.
+
+### Home screen
+
+- Pressing **any button except the power button** leaves the finished splash for the home screen. The power button never enters it.
+- There are no apps yet. The home is an idle screen: the same neon mark and "NexOS" wordmark centered, with the halo gently breathing — exactly where an app grid will eventually live.
 
 ## Device
 

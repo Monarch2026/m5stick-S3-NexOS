@@ -27,19 +27,28 @@ All boxes checked on the physical StickS3:
 
 If PSRAM fails to allocate you'll see `NexOS splash: sprite alloc failed, static fallback` and a plain "NexOS" string instead of the animation — that points to a PSRAM/board-config issue.
 
+## v0.2 — Home screen (current)
+
+Status: **Builds clean; confirm on hardware.**
+
+- Added an empty home screen reached by pressing **any button except the power button** after the boot splash finishes. The power button never enters it.
+- `HomeScreen` reuses `NeonLogo` + `Wordmark`: a fully revealed mark and "NexOS" with a breathing halo, no loading bar, dimmer than the splash for an always-on screen.
+- Boot is now a small two-state machine in `src/main.cpp`; the splash keeps its intro and adds a faint "Press any button" hint once finished.
+- Host preview (`preview/render_splash.py`) renders the hint frame and home frames; see `preview/splash_4700.png` and `preview/home_*.png`.
+
 ## Next
 
 - First GitHub version tagged and pushed (2026-11-21).
-- Home screen that the splash hands off to when the bar completes.
-- App shell: a list of apps, button A / button B to move and open.
+- App shell: a list of apps, button A / button C to move and open.
 - First real apps (still to be chosen).
-- Shared status row (battery, time) once more than one screen exists.
+- Shared status row (battery, time) now that more than one screen exists.
 - Brightness control. Full brightness is correct for the splash and too much for an always-on home screen.
+- Return navigation: leaving the home screen back to the splash (entry is one-way so far).
 
 ## Later
 
-- Home screen that the splash hands off to when the bar completes.
-- App shell: a list of apps, button A / button B to move and open.
+- App shell: a list of apps, button A / button C to move and open.
 - First real apps (still to be chosen).
-- Shared status row (battery, time) once more than one screen exists.
+- Shared status row (battery, time) now that more than one screen exists.
 - Brightness control. Full brightness is correct for the splash and too much for a always-on home screen.
+- Return navigation: leaving the home screen back to the splash (entry is one-way so far).

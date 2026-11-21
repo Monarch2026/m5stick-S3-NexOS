@@ -4,7 +4,7 @@ NexOS is an Arduino firmware built with PlatformIO for the M5StickS3. M5Unified 
 
 ## Boot
 
-`src/main.cpp` configures M5Unified with the speaker, microphone, and IMU left off, then hands the display to `SplashScreen`. The main loop only calls `M5.update()` and `SplashScreen::update()`.
+`src/main.cpp` configures M5Unified with the speaker, microphone, and IMU left off, then starts on the splash. It is a tiny two-state machine: while in `kBoot` it runs `SplashScreen::update()` and watches `M5.update()`, leaving for `kHome` the moment any button except power is pressed (the power button is skipped explicitly via `&M5.BtnPWR`). Once home, the loop only calls `HomeScreen::update()`.
 
 `SplashScreen` locks rotation 0 (135 × 240, portrait) and full backlight. It allocates one 16-bit sprite in PSRAM (135 × 240 × 2 = 64,800 bytes) and falls back to internal RAM, then to a static "NexOS" string if both allocations fail.
 
@@ -25,6 +25,12 @@ Drawing is split so each piece can be reused by later screens:
 - `NeonLogo` draws the diamond and spikes. Each spike base sits on the two edges beside a vertex, and the tip extends radially, so the outline is one shape. Layers, back to front: dark cyan halo, cyan bloom, a 1 px magenta fringe, white core. Only the halo and bloom change size with the breath.
 - `Wordmark` chooses FreeSans Bold 18 pt, 12 pt, or 9 pt so the name fits the width. Letters are drawn magenta, cyan, then white for a neon fringe.
 - `LoadingBar` fills a capsule pixel by pixel: dark track, neon gradient, white leading edge, and an optional sheen.
+
+Once the intro finishes (bar full), the splash holds its breathing state and adds a faint "Press any button" hint at the bottom, so the exit to home is discoverable. The hint fades in over half a second and gently pulses; it disappears as soon as a button leaves the splash.
+
+## Home
+
+`src/home/HomeScreen.cpp` is the second screen, built the same way as the splash: one object owns timing and draws into a PSRAM sprite that is pushed to the panel each frame. It reuses `NeonLogo` and `Wordmark`, so it shows the fully revealed mark and "NexOS" with the same breathing halo — minus the loading bar, since there are no apps yet. Its brightness is set a little below the splash's full strength for a comfortable always-on screen; real brightness control is still to land.
 
 ## Later apps
 
