@@ -50,6 +50,21 @@ Status: **Builds clean; confirm on hardware.**
 - Builds clean: `pio run -e m5stack-sticks3` → SUCCESS (RAM ~7%, Flash ~18%).
 - `preview/render_splash.py` shows the battery icon filling to level, `%NN` text beside it, and the green bolt only while charging; nothing collides with the logo or hint.
 
+## v0.4 — Navigation shell (current)
+
+Status: **Builds clean; confirm on hardware.**
+
+- Added a navigation (launcher) shell reached by pressing **button A** on the black home screen; **button B** returns. The power button never navigates.
+- It is an empty app grid styled like the splash — neon placeholder slots with a breathing halo highlight and the same status row, on a black background. No apps added: every slot is a placeholder, and selecting one does nothing yet. This is the foundation the tiny apps pack will later fill in.
+- New pure drawer `src/ui/NavigationGrid.cpp` (3 × 2 slots, layered neon glow reused from `NeonLogo`) and new screen `src/navigation/NavigationScreen.cpp`; boot is now a three-state machine (`kBoot → kHome → kNavigation`) in `src/main.cpp`.
+- The idle home screen is now just a black background — the neon mark and "NexOS" wordmark were removed from it.
+- Host preview (`preview/render_splash.py`) renders the pure-black home frame and navigation frames (highlight in two positions); see `preview/home_1000.png` and `preview/nav_*.png`.
+
+### Verified off-device
+
+- Builds clean: `pio run -e m5stack-sticks3` → SUCCESS (RAM 7.1%, Flash 18.3%).
+- `preview/render_splash.py` shows a pure-black home frame, then a 3 × 2 grid of faint neon slots with one glowing; moving the highlight shifts it across the grid with the breathing halo and status row intact.
+
 ## Chosen ideas (pending build)
 
 These two were chosen and are ready to implement, in this order:
@@ -60,9 +75,9 @@ These two were chosen and are ready to implement, in this order:
 
 ## Next
 
-- App shell: an app grid on the home screen with button A / C to move and select-to-open. Foundation for the tiny apps pack above. (Medium)
+- The navigation shell exists as an empty grid; fill it with real apps next, starting with select-to-open feedback. Foundation for the tiny apps pack above. (Medium)
 - First real apps (still to be chosen).
-- Return navigation: leaving the home screen back to the splash (entry is one-way so far).
+- Return navigation: leaving the home/navigation screens back to the splash (entry is one-way so far). (Medium)
 
 ## Later
 

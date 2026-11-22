@@ -2,7 +2,7 @@
 
 ## Current
 
-NexOS boots on an M5Stack StickS3 with an animated splash, then offers an empty home screen.
+NexOS boots on an M5Stack StickS3 with an animated splash, then a plain black idle home and an empty navigation shell.
 
 ### Splash (boot)
 
@@ -15,9 +15,15 @@ NexOS boots on an M5Stack StickS3 with an animated splash, then offers an empty 
 ### Home screen
 
 - Pressing **any button except the power button** leaves the finished splash for the home screen. The power button never enters it.
-- There are no apps yet. The home is an idle screen: the same neon mark and "NexOS" wordmark centered, with the halo gently breathing — exactly where an app grid will eventually live.
+- The home is a plain black idle screen: no mark, no name, nothing else. It is the resting state before the navigation shell is opened with **button A**.
 
-### Status row (both splash and home)
+### Navigation (launcher shell)
+
+- Pressing **button A** on the black home opens the navigation shell: an empty app grid styled like the splash — neon placeholder slots on a black background with a breathing halo highlight, and the same status row in the top-right corner.
+- There are no apps yet, so every slot is an empty placeholder. **Button A** moves the highlight to the next slot (it wraps around the grid); **button B** returns to the black home screen. The power button never navigates.
+- Selecting a slot does nothing further because there are no apps — this shell exists only as the foundation the tiny apps pack will later fill in.
+
+### Status row (both splash and navigation)
 
 - A small status row sits in the top-right corner on both screens: a battery icon filled to the remaining charge, its percentage, and a charging indicator (a green bolt above the icon while charging).
 - No clock. The StickS3 has no wall-clock source without network or an external RTC, both out of scope; there is intentionally no time display.
@@ -31,4 +37,4 @@ NexOS boots on an M5Stack StickS3 with an animated splash, then offers an empty 
 
 ## Out of scope for this version
 
-- App launcher, extra apps, settings, sound, and network.
+- An empty navigation shell now exists; extra apps, settings, sound, and network are still out of scope.

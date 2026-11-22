@@ -4,7 +4,7 @@ NexOS is an Arduino firmware built with PlatformIO for the M5StickS3. M5Unified 
 
 ## Boot
 
-`src/main.cpp` configures M5Unified with the speaker, microphone, and IMU left off, then starts on the splash. It is a tiny two-state machine: while in `kBoot` it runs `SplashScreen::update()` and watches `M5.update()`, leaving for `kHome` the moment any button except power is pressed (the power button is skipped explicitly via `&M5.BtnPWR`). Once home, the loop only calls `HomeScreen::update()`.
+`src/main.cpp` configures M5Unified with the speaker, microphone, and IMU left off, then starts on the splash. It is a small three-state machine: while in `kBoot` it runs `SplashScreen::update()` and watches `M5.update()`, leaving for `kHome` the moment any button except power is pressed (the power button is skipped explicitly via `&M5.BtnPWR`). On home, **button A** opens the navigation shell (`kNavigation`) and **button B** returns; in between the loop only calls `HomeScreen::update()`.
 
 `SplashScreen` locks rotation 0 (135 × 240, portrait) and full backlight. It allocates one 16-bit sprite in PSRAM (135 × 240 × 2 = 64,800 bytes) and falls back to internal RAM, then to a static "NexOS" string if both allocations fail.
 
@@ -33,7 +33,13 @@ The status row is drawn on both the splash and the home frame, before the mark, 
 
 ## Home
 
-`src/home/HomeScreen.cpp` is the second screen, built the same way as the splash: one object owns timing and draws into a PSRAM sprite that is pushed to the panel each frame. It reuses `NeonLogo` and `Wordmark`, so it shows the fully revealed mark and "NexOS" with the same breathing halo — minus the loading bar, since there are no apps yet. Its brightness is set a little below the splash's full strength for a comfortable always-on screen; real brightness control is still to land.
+`src/home/HomeScreen.cpp` is the second screen, built the same way as the splash: one object owns timing and draws into a PSRAM sprite that is pushed to the panel each frame. It is intentionally just a black background — the neon mark, wordmark, and status row were removed for this idle state. Its brightness is set a little below the splash's full strength for a comfortable always-on screen; real brightness control is still to land. Pressing **button A** leaves it for the navigation shell.
+
+## Navigation
+
+`src/navigation/NavigationScreen.cpp` is the launcher shell, again one object owning timing and drawing into a PSRAM sprite pushed to the panel each frame. It reuses `StatusRow` for the corner battery read and paints an empty app grid through the new pure drawer `src/ui/NavigationGrid.cpp`.
+
+`NavigationGrid` lays out a 3 × 2 field of placeholder slots and draws each as a faint rounded square with a small center dot; the selected slot gets the same layered neon glow as `NeonLogo` — a cyan halo, a body that pulses from cyan-halo to white, and a magenta fringe — breathing on the same rhythm as the splash. It is pure draw-only: the screen owns `_selected`, passes the breath each frame, and advances it with `advance()` (wrapping) when **button A** is pressed. There are no app icons because there are no apps; this grid is exactly where they will eventually live.
 
 ## Later apps
 

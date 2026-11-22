@@ -2,3 +2,6 @@
 .vscode
 .DS_Store
 preview/
+
+# Microsoft Office temporary lock files (~$...)
+~$*
