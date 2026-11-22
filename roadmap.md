@@ -36,11 +36,25 @@ Status: **Builds clean; confirm on hardware.**
 - Boot is now a small two-state machine in `src/main.cpp`; the splash keeps its intro and adds a faint "Press any button" hint once finished.
 - Host preview (`preview/render_splash.py`) renders the hint frame and home frames; see `preview/splash_4700.png` and `preview/home_*.png`.
 
+## v0.3 — Status row (current)
+
+Status: **Builds clean; confirm on hardware.**
+
+- A status row in the top-right corner shows battery percentage plus a charging indicator (a green bolt above the icon while charging), across both the splash and home screens.
+- No clock: network is out of scope, so there is intentionally no time display.
+- Battery comes from `M5.Power.getBatteryLevel()` (0–100) and `M5.Power.isCharging()`, read through `src/ui/StatusRow.cpp` and throttled to ~1 Hz. New pure drawer under `src/ui`, integrated into both screens before the mark.
+- Host preview (`preview/render_splash.py`) renders the status row on splash and home, including low-charge and charging states; see `preview/home_*.png`.
+
+### Verified off-device
+
+- Builds clean: `pio run -e m5stack-sticks3` → SUCCESS (RAM ~7%, Flash ~18%).
+- `preview/render_splash.py` shows the battery icon filling to level, `%NN` text beside it, and the green bolt only while charging; nothing collides with the logo or hint.
+
 ## Chosen ideas (pending build)
 
-These three were chosen and are ready to implement, in this order:
+These two were chosen and are ready to implement, in this order:
 
-1. **Status row** — battery % + clock in a corner, shown across the splash and home. Small; no extra hardware.
+1. **Status row** — battery % (+ charging indicator) in a corner, shown across the splash and home. No clock: network is out of scope. Small; no extra hardware.
 2. **Themes / accent colors** — swap the neon accent palette via a small settings screen. Small; no extra hardware.
 3. **Tiny apps pack** — 2–3 small apps such as stopwatch, dice, and compass. The compass needs the IMU turned on; stopwatch and dice don't. Large; needs the app shell below first.
 

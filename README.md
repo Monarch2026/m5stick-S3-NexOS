@@ -47,14 +47,14 @@ Single-click the power button to reset and watch the intro again. Double-click p
 
 ## What you should see
 
-Hold the stick with the USB port down.
+Hold the stick with the USB port down. A small status row (battery percentage plus a battery icon) sits in the top-right corner on both screens; while charging, a green bolt appears above the icon. There is no clock — network and external RTC are out of scope.
 
 1. A short black beat.
 2. A white diamond fades in with a cyan halo and a magenta edge. Spikes grow from the top, right, bottom, and left.
 3. **NexOS** appears under the mark.
 4. A rounded bar fills from cyan to magenta.
 5. The bar stays full, a bright streak moves across it, and the halo breathes.
-6. A faint **Press any button** appears below the bar. Press any button except the power button to reach the home screen: the same mark and **NexOS**, no bar, halo still breathing.
+6. A faint **Press any button** appears below the bar. Press any button except the power button to reach the home screen: the same mark and **NexOS**, no bar, halo still breathing. The status row stays in the top-right corner there too.
 
 If the image is sideways, say so. Rotation is set to `0` in `SplashScreen::begin`.
 
@@ -67,7 +67,7 @@ pip install pillow
 python preview/render_splash.py   # writes preview/splash_<ms>.png
 ```
 
-The PNGs (`splash_700.png`, `splash_2200.png`, `splash_5200.png`, …) show the diamond, wordmark, and bar at key moments. This is a host approximation — confirm on the real device for exact colors and timing.
+The PNGs (`splash_700.png`, `splash_2200.png`, `splash_5200.png`, …) show the diamond, wordmark, and bar at key moments. The home frames (`home_*.png`) also show the status row in the top-right corner — battery percentage with a filled icon, plus a green charging bolt when plugged in. This is a host approximation — confirm on the real device for exact colors and timing.
 
 ## Layout
 
@@ -76,7 +76,7 @@ include/nexos/     headers
 src/main.cpp       boot
 src/home/          idle home screen reached from the splash
 src/splash/        splash timing and the offscreen frame
-src/ui/            logo, wordmark, loading bar
+src/ui/            logo, wordmark, loading bar, status row
 platformio.ini     StickS3 target
 requirements.md    what this version must do
 architecture.md    how the splash is built

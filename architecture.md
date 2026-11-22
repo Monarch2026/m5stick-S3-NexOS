@@ -25,8 +25,11 @@ Drawing is split so each piece can be reused by later screens:
 - `NeonLogo` draws the diamond and spikes. Each spike base sits on the two edges beside a vertex, and the tip extends radially, so the outline is one shape. Layers, back to front: dark cyan halo, cyan bloom, a 1 px magenta fringe, white core. Only the halo and bloom change size with the breath.
 - `Wordmark` chooses FreeSans Bold 18 pt, 12 pt, or 9 pt so the name fits the width. Letters are drawn magenta, cyan, then white for a neon fringe.
 - `LoadingBar` fills a capsule pixel by pixel: dark track, neon gradient, white leading edge, and an optional sheen.
+- `StatusRow` draws the battery status in the top-right corner: an outline icon filled to the remaining charge, its percentage, and a green charging bolt above it while charging. It is pure draw-only; the numbers come from `M5.Power.getBatteryLevel()` (0–100) and `M5.Power.isCharging()`. The StickS3 reports voltage as a noisy single ADC sample, so `poll()` averages several quick reads before returning to keep the percentage steady instead of jittering.
 
 Once the intro finishes (bar full), the splash holds its breathing state and adds a faint "Press any button" hint at the bottom, so the exit to home is discoverable. The hint fades in over half a second and gently pulses; it disappears as soon as a button leaves the splash.
+
+The status row is drawn on both the splash and the home frame, before the mark, so it sits on top and clear of the logo. Battery reads are throttled to about 1 Hz: `StatusRow::poll()` only refreshes the cached values when at least a second has passed, so every frame can pass them to the drawer without hammering the I2C bus.
 
 ## Home
 

@@ -32,6 +32,9 @@ constexpr Rgb CyanBloom{0, 186, 230};
 constexpr Rgb CyanHalo{0, 52, 86};
 constexpr Rgb Magenta{255, 0, 196};
 constexpr Rgb Track{32, 34, 46};
+// Charging indicator. Kept distinct from the cyan/white status text so it reads
+// as "active" at a glance on the black background.
+constexpr Rgb Green{0, 230, 120};
 
 }  // namespace Palette
 }  // namespace nexos

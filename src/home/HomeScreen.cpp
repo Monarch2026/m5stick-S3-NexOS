@@ -70,6 +70,10 @@ void HomeScreen::render(uint32_t elapsedMs) {
   float elapsed = (float)elapsedMs;
   _canvas->fillSprite(TFT_BLACK);
 
+  // Status row sits in the corner above the mark.
+  StatusRow::poll(&_batteryLevel, &_charging);
+  _status.draw(_canvas, _batteryLevel, _charging);
+
   // Same breathing rhythm as the finished splash idle state.
   float breath = 0.90f + 0.10f * sinf(elapsed * 0.0042f);
 

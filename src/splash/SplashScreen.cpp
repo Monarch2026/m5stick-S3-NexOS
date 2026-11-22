@@ -94,6 +94,10 @@ void SplashScreen::render(uint32_t elapsedMs) {
   float elapsed = (float)elapsedMs;
   _canvas->fillSprite(TFT_BLACK);
 
+  // Status row is drawn first so it sits on top of the animated mark.
+  StatusRow::poll(&_batteryLevel, &_charging);
+  _status.draw(_canvas, _batteryLevel, _charging);
+
   float body = Easing::outCubic(Easing::window(elapsed, kBodyStart, kBodyDuration));
   // Settle from a slightly smaller mark instead of scaling up from nothing.
   float scale = 0.78f + 0.22f * body;
