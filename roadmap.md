@@ -36,19 +36,20 @@ Status: **Builds clean; confirm on hardware.**
 - Boot is now a small two-state machine in `src/main.cpp`; the splash keeps its intro and adds a faint "Press any button" hint once finished.
 - Host preview (`preview/render_splash.py`) renders the hint frame and home frames; see `preview/splash_4700.png` and `preview/home_*.png`.
 
+## Chosen ideas (pending build)
+
+These three were chosen and are ready to implement, in this order:
+
+1. **Status row** — battery % + clock in a corner, shown across the splash and home. Small; no extra hardware.
+2. **Themes / accent colors** — swap the neon accent palette via a small settings screen. Small; no extra hardware.
+3. **Tiny apps pack** — 2–3 small apps such as stopwatch, dice, and compass. The compass needs the IMU turned on; stopwatch and dice don't. Large; needs the app shell below first.
+
 ## Next
 
-- First GitHub version tagged and pushed (2026-11-21).
-- App shell: a list of apps, button A / button C to move and open.
+- App shell: an app grid on the home screen with button A / C to move and select-to-open. Foundation for the tiny apps pack above. (Medium)
 - First real apps (still to be chosen).
-- Shared status row (battery, time) now that more than one screen exists.
-- Brightness control. Full brightness is correct for the splash and too much for an always-on home screen.
 - Return navigation: leaving the home screen back to the splash (entry is one-way so far).
 
 ## Later
 
-- App shell: a list of apps, button A / button C to move and open.
-- First real apps (still to be chosen).
-- Shared status row (battery, time) now that more than one screen exists.
-- Brightness control. Full brightness is correct for the splash and too much for a always-on home screen.
-- Return navigation: leaving the home screen back to the splash (entry is one-way so far).
+- Brightness control. Full brightness is correct for the splash and too much for an always-on home screen.
